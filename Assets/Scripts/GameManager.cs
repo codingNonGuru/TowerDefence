@@ -10,6 +10,10 @@ namespace TowerDefence
 		static GameManager instance = null;
 
 		public static event Action OnTowerAddStarted;
+		public static event Action OnTowerAdded;
+
+		[SerializeField]
+		List <TowerClass> towerClasses = null;
 
 		bool isAddingTower = false;
 
@@ -20,7 +24,12 @@ namespace TowerDefence
 			get {return instance.isAddingTower;}
 		}
 
-		void Start()
+		public static List <TowerClass> TowerClasses
+		{
+			get {return instance.towerClasses;}
+		}
+
+		void Awake()
 		{
 			if(instance == null)
 				instance = this;
@@ -31,9 +40,24 @@ namespace TowerDefence
 			if(instance.isAddingTower)
 				return;
 
+			instance.isAddingTower = true;
+
 			if(OnTowerAddStarted != null)
 			{
 				OnTowerAddStarted.Invoke();
+			}
+		}
+
+		public static void AddTower()
+		{
+			if(!instance.isAddingTower)
+				return;
+
+			instance.isAddingTower = false;
+
+			if(OnTowerAdded != null)
+			{
+				OnTowerAdded.Invoke();
 			}
 		}
 	}
