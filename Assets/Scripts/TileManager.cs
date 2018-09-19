@@ -9,6 +9,10 @@ namespace TowerDefence
 	{
 		static TileManager instance = null;
 
+		public static event Action OnTileSelected;
+
+		public const float scaleFactor = 0.6f;
+
 		[SerializeField]
 		GameObject tilePrefab = null;
 
@@ -16,6 +20,13 @@ namespace TowerDefence
 		int mapSize;
 
 		List <Tile> tiles = null;
+
+		Tile selectedTile = null;
+
+		public static Tile SelectedTile
+		{
+			get {return instance.selectedTile;}
+		}
 
 		void Awake()
 		{
@@ -26,6 +37,34 @@ namespace TowerDefence
 		void Start () 
 		{
 			GenerateTiles();
+		}
+
+		void Update()
+		{
+			if(!GameManager.IsAddingTower)
+				return;
+
+			Tile previousTile = selectedTile;
+
+			selectedTile = null;
+			foreach(var tile in tiles)
+			{
+				if(tile.IsMouseOver)
+				{
+					selectedTile = tile;
+					break;
+				}
+			}
+
+			if(previousTile != null)
+			{
+				previousTile.RefreshStatus();
+			}
+
+			if(selectedTile != null)
+			{
+				selectedTile.RefreshStatus();
+			}
 		}
 
 		void GenerateTiles()
@@ -42,6 +81,8 @@ namespace TowerDefence
 				for(int j = 0; j < mapSize; ++j)
 				{
 					var position = new Vector3((float)i - positionOffset, (float)j - positionOffset, 0.0f);
+					position *= scaleFactor;
+
 					var tileObject = Instantiate(tilePrefab, position, Quaternion.identity);
 					if(tileObject == null)
 						continue;
