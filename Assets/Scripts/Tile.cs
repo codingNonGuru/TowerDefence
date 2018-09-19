@@ -15,9 +15,16 @@ namespace TowerDefence
 
 		bool isMouseOver = false;
 
+		Tower tower = null;
+
 		public bool IsMouseOver
 		{
 			get {return isMouseOver;}
+		}
+
+		public Tower Tower 
+		{
+			get {return tower;}
 		}
 
 		void Start()
@@ -33,6 +40,14 @@ namespace TowerDefence
 			{
 				spriteRenderer.color = color;
 			}
+		}
+
+		public void AddTower(Tower tower)
+		{
+			this.tower = tower;
+
+			tower.transform.SetParent(transform);
+			tower.transform.localPosition = Vector3.zero;
 		}
 
 		void OnMouseEnter()

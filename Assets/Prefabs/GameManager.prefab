@@ -62,3 +62,5 @@ MonoBehaviour:
     HasSlow: 1
     Cost: 8
     IconColor: {r: 0, g: 0.34647155, b: 1, a: 1}
+  towerPrefab: {fileID: 1201314907440492, guid: afb8f46dd5cf14fbbb3cd197eba0eae9,
+    type: 2}

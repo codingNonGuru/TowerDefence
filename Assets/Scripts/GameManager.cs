@@ -15,6 +15,9 @@ namespace TowerDefence
 		[SerializeField]
 		List <TowerClass> towerClasses = null;
 
+		[SerializeField]
+		GameObject towerPrefab = null;
+
 		bool isAddingTower = false;
 
 		int goldCount = 0;
@@ -40,6 +43,14 @@ namespace TowerDefence
 				instance = this;
 		}
 
+		void Update()
+		{
+			if(Input.GetMouseButtonDown(0) && TileManager.SelectedTile != null)
+			{
+				AddTower();
+			}
+		}
+
 		public static void StartAddingTower()
 		{
 			if(instance.isAddingTower)
@@ -53,12 +64,26 @@ namespace TowerDefence
 			}
 		}
 
-		public static void AddTower()
+		void AddTower()
 		{
 			if(!instance.isAddingTower)
 				return;
 
-			instance.isAddingTower = false;
+			if(TileManager.SelectedTile.Tower != null)
+				return;
+
+			if(towerPrefab == null)
+				return;
+
+			var towerObject = Instantiate(towerPrefab);
+			if(towerObject == null)
+				return;
+
+			var tower = towerObject.GetComponent<Tower>();
+			if(tower == null)
+				return;
+
+			TileManager.SelectedTile.AddTower(tower);
 
 			if(OnTowerAdded != null)
 			{
