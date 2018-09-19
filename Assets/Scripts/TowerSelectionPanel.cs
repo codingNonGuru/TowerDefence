@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TowerDefence
 {	
-	public class TowerSelectionPanel : MonoBehaviour 
+	public class TowerSelectionPanel : Element 
 	{
 		[SerializeField]
 		GameObject itemPrefab = null;
@@ -12,7 +12,7 @@ namespace TowerDefence
 		[SerializeField]
 		Transform itemList = null;
 
-		public void Setup()
+		protected override void OnSetup()
 		{
 			CreateItems();
 

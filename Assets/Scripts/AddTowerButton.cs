@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TowerDefence
 {
-	public class AddTowerButton : MonoBehaviour 
+	public class AddTowerButton : Element 
 	{
 		void Start()
 		{

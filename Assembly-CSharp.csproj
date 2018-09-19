@@ -52,7 +52,9 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AddTowerButton.cs" />
+     <Compile Include="Assets\Scripts\Element.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\GoldCounter.cs" />
      <Compile Include="Assets\Scripts\Interface.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\TileManager.cs" />

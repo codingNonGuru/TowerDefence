@@ -17,11 +17,16 @@ namespace TowerDefence
 
 		bool isAddingTower = false;
 
-		int gold = 0;
+		int goldCount = 0;
 
 		public static bool IsAddingTower
 		{
 			get {return instance.isAddingTower;}
+		}
+
+		public static int GoldCount
+		{
+			get {return instance.goldCount;}
 		}
 
 		public static List <TowerClass> TowerClasses

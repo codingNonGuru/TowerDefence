@@ -8,12 +8,20 @@ namespace TowerDefence
 	{
 		[SerializeField]
 		TowerSelectionPanel selectionPanel = null;
+
+		[SerializeField]
+		GoldCounter goldCounter = null;
 	
 		void Start()
 		{
 			if(selectionPanel != null)
 			{
 				selectionPanel.Setup();
+			}
+
+			if(goldCounter != null)
+			{
+				goldCounter.Setup();
 			}
 		}
 	}
