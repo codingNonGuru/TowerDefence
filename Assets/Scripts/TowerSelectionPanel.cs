@@ -12,11 +12,27 @@ namespace TowerDefence
 		[SerializeField]
 		Transform itemList = null;
 
+		[SerializeField]
+		Transform itemSelector = null;
+
+		int selectionIndex = 0;
+
+		List <TowerItem> items = null;
+
+		void Update()
+		{
+			UpdateSelection();
+		}
+
 		protected override void OnSetup()
 		{
 			CreateItems();
 
-			GameManager.OnTowerAddStarted += HandleTowerAddStarted;
+			GameManager.OnTowerBuildModeEntered += HandleBuildModeEntered;
+
+			GameManager.OnTowerAdded += HandleTowerAdded;
+
+			UpdateSelection();
 		}
 
 		void CreateItems()
@@ -27,6 +43,8 @@ namespace TowerDefence
 			var towerClasses = GameManager.TowerClasses;
 			if(towerClasses == null)
 				return;
+
+			items = new List <TowerItem> (towerClasses.Count);
 
 			foreach(var towerClass in towerClasses)
 			{
@@ -41,12 +59,59 @@ namespace TowerDefence
 					continue;
 
 				item.TowerClass = towerClass;
+
+				items.Add(item);
 			}
 		}
 
-		void HandleTowerAddStarted()
+		void HandleBuildModeEntered()
 		{
 			gameObject.SetActive(true);
+		}
+
+		void HandleTowerAdded()
+		{
+			if(!GameManager.IsAddingTower)
+			{
+				gameObject.SetActive(false);
+			}
+		}
+
+		void UpdateSelection()
+		{
+			var towerClasses = GameManager.TowerClasses;
+			if(towerClasses == null)
+				return;
+
+			if(Input.GetKeyDown(KeyCode.LeftArrow))
+			{
+				selectionIndex--;
+				if(selectionIndex < 0)
+				{
+					selectionIndex = towerClasses.Count - 1;
+				}
+			}
+			else if(Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				selectionIndex++;
+				if(selectionIndex >= towerClasses.Count)
+				{
+					selectionIndex = 0;
+				}
+			}
+
+			GameManager.SelectedTowerClass = towerClasses[selectionIndex];
+
+			if(items == null)
+				return;
+
+			var selectedItem = items[selectionIndex];
+
+			if(itemSelector != null)
+			{
+				itemSelector.SetParent(selectedItem.transform);
+				itemSelector.localPosition = Vector3.zero;
+			}
 		}
 	}
 }

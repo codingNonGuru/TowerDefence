@@ -42,7 +42,15 @@ namespace TowerDefence
 		void Update()
 		{
 			if(!GameManager.IsAddingTower)
+			{
+				if(selectedTile != null)
+				{
+					selectedTile.RefreshStatus();
+				}
+
+				selectedTile = null;
 				return;
+			}
 
 			Tile previousTile = selectedTile;
 

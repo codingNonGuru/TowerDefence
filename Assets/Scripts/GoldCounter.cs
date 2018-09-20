@@ -13,6 +13,8 @@ namespace TowerDefence
 		protected override void OnSetup()
 		{
 			GameManager.OnTowerAdded += HandleGoldAmountChanged;
+
+			HandleGoldAmountChanged();
 		}
 
 		void HandleGoldAmountChanged()

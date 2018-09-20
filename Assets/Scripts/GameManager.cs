@@ -9,7 +9,7 @@ namespace TowerDefence
 	{
 		static GameManager instance = null;
 
-		public static event Action OnTowerAddStarted;
+		public static event Action OnTowerBuildModeEntered;
 		public static event Action OnTowerAdded;
 
 		[SerializeField]
@@ -18,9 +18,14 @@ namespace TowerDefence
 		[SerializeField]
 		GameObject towerPrefab = null;
 
+		[SerializeField]
+		int initialGoldCount = 0;
+
 		bool isAddingTower = false;
 
 		int goldCount = 0;
+
+		TowerClass selectedTowerClass = null;
 
 		public static bool IsAddingTower
 		{
@@ -37,10 +42,31 @@ namespace TowerDefence
 			get {return instance.towerClasses;}
 		}
 
+		public static TowerClass SelectedTowerClass
+		{
+			set {instance.selectedTowerClass = value;}
+		}
+
+		public static bool CanBuildTower
+		{
+			get 
+			{
+				foreach(var towerClass in instance.towerClasses)
+				{
+					if(instance.goldCount >= towerClass.Cost)
+						return true;
+				}
+
+				return false;
+			}
+		}
+
 		void Awake()
 		{
 			if(instance == null)
 				instance = this;
+
+			goldCount = initialGoldCount;
 		}
 
 		void Update()
@@ -51,22 +77,22 @@ namespace TowerDefence
 			}
 		}
 
-		public static void StartAddingTower()
+		public static void EnterTowerBuildMode()
 		{
 			if(instance.isAddingTower)
 				return;
 
 			instance.isAddingTower = true;
 
-			if(OnTowerAddStarted != null)
+			if(OnTowerBuildModeEntered != null)
 			{
-				OnTowerAddStarted.Invoke();
+				OnTowerBuildModeEntered.Invoke();
 			}
 		}
 
 		void AddTower()
 		{
-			if(!instance.isAddingTower)
+			if(!isAddingTower)
 				return;
 
 			if(TileManager.SelectedTile.Tower != null)
@@ -75,15 +101,33 @@ namespace TowerDefence
 			if(towerPrefab == null)
 				return;
 
+			if(selectedTowerClass == null)
+				return;
+
+			if(selectedTowerClass.Cost > goldCount)
+				return;
+
 			var towerObject = Instantiate(towerPrefab);
 			if(towerObject == null)
 				return;
 
 			var tower = towerObject.GetComponent<Tower>();
 			if(tower == null)
+			{
+				Destroy(towerObject);
 				return;
+			}
+
+			tower.TowerClass = selectedTowerClass;
 
 			TileManager.SelectedTile.AddTower(tower);
+
+			goldCount -= selectedTowerClass.Cost;
+
+			if(!CanBuildTower)
+			{
+				isAddingTower = false;
+			}
 
 			if(OnTowerAdded != null)
 			{

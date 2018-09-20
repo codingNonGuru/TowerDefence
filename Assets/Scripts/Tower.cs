@@ -6,6 +6,8 @@ namespace TowerDefence
 {
 	public class Tower : MonoBehaviour 
 	{
+		SpriteRenderer spriteRenderer = null;
+
 		TowerClass towerClass = null;
 
 		public TowerClass TowerClass
@@ -15,7 +17,12 @@ namespace TowerDefence
 
 		void Start () 
 		{
-			
+			spriteRenderer = GetComponent<SpriteRenderer>();
+
+			if(spriteRenderer != null)
+			{
+				spriteRenderer.color = towerClass.IconColor;
+			}
 		}
 	}
 }

@@ -8,15 +8,15 @@ namespace TowerDefence
 	{
 		void Start()
 		{
-			GameManager.OnTowerAddStarted += HandleTowerAddStarted;
+			GameManager.OnTowerBuildModeEntered += HandleBuildModeEntered;
 		}
 
 		public void AddTower()
 		{
-			GameManager.StartAddingTower();
+			GameManager.EnterTowerBuildMode();
 		}
 
-		void HandleTowerAddStarted()
+		void HandleBuildModeEntered()
 		{
 			gameObject.SetActive(false);
 		}
