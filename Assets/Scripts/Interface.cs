@@ -11,6 +11,9 @@ namespace TowerDefence
 
 		[SerializeField]
 		GoldCounter goldCounter = null;
+
+		[SerializeField]
+		StartWaveButton startWaveButton = null;
 	
 		void Start()
 		{
@@ -22,6 +25,11 @@ namespace TowerDefence
 			if(goldCounter != null)
 			{
 				goldCounter.Setup();
+			}
+
+			if(startWaveButton != null)
+			{
+				startWaveButton.Setup();
 			}
 		}
 	}

@@ -52,10 +52,15 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AddTowerButton.cs" />
+     <Compile Include="Assets\Scripts\Creep.cs" />
+     <Compile Include="Assets\Scripts\CreepData.cs" />
+     <Compile Include="Assets\Scripts\CreepManager.cs" />
+     <Compile Include="Assets\Scripts\CreepWave.cs" />
      <Compile Include="Assets\Scripts\Element.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GoldCounter.cs" />
      <Compile Include="Assets\Scripts\Interface.cs" />
+     <Compile Include="Assets\Scripts\StartWaveButton.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\TileManager.cs" />
      <Compile Include="Assets\Scripts\Tower.cs" />
