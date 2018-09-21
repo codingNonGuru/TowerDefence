@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TowerDefence
 {
-	public class StartWaveButton : Element 
+	public class ReturnButton : Element 
 	{
 		protected override void OnSetup()
 		{
@@ -13,24 +13,19 @@ namespace TowerDefence
 			GameManager.OnTowerBuildModeExited += HandleBuildModeExited;
 		}
 
+		public void Return()
+		{
+			GameManager.ExitTowerBuildMode();
+		}
+
 		void HandleBuildModeEntered()
 		{
-			gameObject.SetActive(false);
+			gameObject.SetActive(true);
 		}
 
 		void HandleBuildModeExited()
 		{
-			gameObject.SetActive(true);
-		}
-
-		void HandleWaveStarted()
-		{
 			gameObject.SetActive(false);
-		}
-
-		void HandleWaveEnded()
-		{
-			gameObject.SetActive(true);
 		}
 	}
 }

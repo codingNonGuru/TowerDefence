@@ -14,6 +14,9 @@ namespace TowerDefence
 
 		[SerializeField]
 		StartWaveButton startWaveButton = null;
+
+		[SerializeField]
+		ReturnButton returnButton = null;
 	
 		void Start()
 		{
@@ -30,6 +33,11 @@ namespace TowerDefence
 			if(startWaveButton != null)
 			{
 				startWaveButton.Setup();
+			}
+
+			if(returnButton != null)
+			{
+				returnButton.Setup();
 			}
 		}
 	}

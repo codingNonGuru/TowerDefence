@@ -9,6 +9,8 @@ namespace TowerDefence
 		void Start()
 		{
 			GameManager.OnTowerBuildModeEntered += HandleBuildModeEntered;
+
+			GameManager.OnTowerBuildModeExited += HandleBuildModeExited;
 		}
 
 		public void AddTower()
@@ -19,6 +21,11 @@ namespace TowerDefence
 		void HandleBuildModeEntered()
 		{
 			gameObject.SetActive(false);
+		}
+
+		void HandleBuildModeExited()
+		{
+			gameObject.SetActive(true);
 		}
 	}
 }

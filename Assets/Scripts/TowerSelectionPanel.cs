@@ -30,7 +30,7 @@ namespace TowerDefence
 
 			GameManager.OnTowerBuildModeEntered += HandleBuildModeEntered;
 
-			GameManager.OnTowerAdded += HandleTowerAdded;
+			GameManager.OnTowerBuildModeExited += HandleBuildModeExited;
 
 			UpdateSelection();
 		}
@@ -69,12 +69,9 @@ namespace TowerDefence
 			gameObject.SetActive(true);
 		}
 
-		void HandleTowerAdded()
+		void HandleBuildModeExited()
 		{
-			if(!GameManager.IsAddingTower)
-			{
-				gameObject.SetActive(false);
-			}
+			gameObject.SetActive(false);
 		}
 
 		void UpdateSelection()

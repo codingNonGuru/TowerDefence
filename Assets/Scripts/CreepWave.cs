@@ -9,5 +9,7 @@ namespace TowerDefence
 	public class CreepWave 
 	{
         public List <CreepType> CreepTypes;
+
+        public int GoldBonus;
     }
 }

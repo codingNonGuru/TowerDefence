@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GoldCounter.cs" />
      <Compile Include="Assets\Scripts\Interface.cs" />
+     <Compile Include="Assets\Scripts\ReturnButton.cs" />
      <Compile Include="Assets\Scripts\StartWaveButton.cs" />
      <Compile Include="Assets\Scripts\Tile.cs" />
      <Compile Include="Assets\Scripts\TileManager.cs" />

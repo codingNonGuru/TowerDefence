@@ -10,6 +10,7 @@ namespace TowerDefence
 		static GameManager instance = null;
 
 		public static event Action OnTowerBuildModeEntered;
+		public static event Action OnTowerBuildModeExited;
 		public static event Action OnTowerAdded;
 
 		[SerializeField]
@@ -90,6 +91,19 @@ namespace TowerDefence
 			}
 		}
 
+		public static void ExitTowerBuildMode()
+		{
+			if(!instance.isAddingTower)
+				return;
+
+			instance.isAddingTower = false;
+
+			if(OnTowerBuildModeExited != null)
+			{
+				OnTowerBuildModeExited.Invoke();
+			}
+		}
+
 		void AddTower()
 		{
 			if(!isAddingTower)
@@ -123,11 +137,6 @@ namespace TowerDefence
 			TileManager.SelectedTile.AddTower(tower);
 
 			goldCount -= selectedTowerClass.Cost;
-
-			if(!CanBuildTower)
-			{
-				isAddingTower = false;
-			}
 
 			if(OnTowerAdded != null)
 			{
