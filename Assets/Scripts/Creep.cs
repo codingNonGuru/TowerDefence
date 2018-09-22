@@ -17,12 +17,20 @@ namespace TowerDefence
 		
 		void Update () 
 		{
-			
+
 		}
 
-		public void Setup()
+		public void Spawn()
 		{
-			currentHitpoints = data.MaximumHitpoints;
+			gameObject.SetActive(true);
+
+			var spawnPlace = TileManager.FirstRoadTile;
+			if(spawnPlace != null)
+			{
+				transform.position = spawnPlace.transform.position;
+			}
+
+			//currentHitpoints = data.MaximumHitpoints;
 		}
 	}
 }

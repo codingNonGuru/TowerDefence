@@ -6,11 +6,20 @@ namespace TowerDefence
 {
 	public class StartWaveButton : Element 
 	{
+		public void StartWave()
+		{
+			CreepManager.LaunchWave();
+		}
+
 		protected override void OnSetup()
 		{
 			GameManager.OnTowerBuildModeEntered += HandleBuildModeEntered;
 
 			GameManager.OnTowerBuildModeExited += HandleBuildModeExited;
+
+			CreepManager.OnWaveLaunched += HandleWaveStarted;
+
+			CreepManager.OnWaveEnded += HandleWaveEnded;
 		}
 
 		void HandleBuildModeEntered()

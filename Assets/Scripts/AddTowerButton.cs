@@ -11,6 +11,10 @@ namespace TowerDefence
 			GameManager.OnTowerBuildModeEntered += HandleBuildModeEntered;
 
 			GameManager.OnTowerBuildModeExited += HandleBuildModeExited;
+
+			CreepManager.OnWaveLaunched += HandleWaveStarted;
+
+			CreepManager.OnWaveEnded += HandleWaveEnded;
 		}
 
 		public void AddTower()
@@ -24,6 +28,16 @@ namespace TowerDefence
 		}
 
 		void HandleBuildModeExited()
+		{
+			gameObject.SetActive(true);
+		}
+
+		void HandleWaveStarted()
+		{
+			gameObject.SetActive(false);
+		}
+
+		void HandleWaveEnded()
 		{
 			gameObject.SetActive(true);
 		}

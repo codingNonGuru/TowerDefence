@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ namespace TowerDefence
 	public class CreepManager : MonoBehaviour 
 	{
 		static CreepManager instance = null;
+
+		public static event Action OnWaveLaunched;
+		public static event Action OnWaveEnded;
 
 		[SerializeField]
 		GameObject creepPrefab = null;
@@ -23,6 +27,15 @@ namespace TowerDefence
 
 		int currentWaveIndex = 0;
 
+		CreepWave currentWave = null;
+
+		int currentCreepIndex = 0;
+
+		public static CreepWave CurrentWave
+		{
+			get {return instance.currentWave;}
+		}
+
 		void Awake()
 		{
 			if(instance == null)
@@ -32,6 +45,23 @@ namespace TowerDefence
 		void Start()
 		{
 			CreateCreeps();
+		}
+
+		public static void LaunchWave()
+		{
+			if(GameManager.IsAddingTower)
+				return;
+
+			instance.currentWave = instance.creepWaves[instance.currentWaveIndex];
+
+			instance.currentWaveIndex++;
+
+			instance.SpawnCreep();
+
+			if(OnWaveLaunched != null)
+			{
+				OnWaveLaunched.Invoke();
+			}
 		}
 
 		void CreateCreeps()
@@ -57,6 +87,18 @@ namespace TowerDefence
 
 				creepObject.SetActive(false);
 			}
+		}
+
+		void SpawnCreep()
+		{
+			if(creeps == null)
+				return;
+
+			var creep = creeps[currentCreepIndex];
+			if(creep == null)
+				return;
+
+			creep.Spawn();
 		}
 	}
 }

@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1118799660081932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6183905, y: 1.2065388, z: 2.231375}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -62,4 +62,6 @@ MonoBehaviour:
     MoveSpeed: 1
   creepWaves:
   - CreepTypes: 0000000000000000000000000000000000000000
+    GoldBonus: 0
   - CreepTypes: 0000000000000000010000000000000000000000010000000000000000000000
+    GoldBonus: 0

@@ -11,11 +11,17 @@ namespace TowerDefence
 
 		static Color unselectedColor = Color.white;
 
+		static Color roadColor = Color.gray;
+
 		SpriteRenderer spriteRenderer = null;
 
 		bool isMouseOver = false;
 
 		Tower tower = null;
+
+		bool isRoad = false;
+
+		Tile nextTile = null;
 
 		public bool IsMouseOver
 		{
@@ -27,14 +33,28 @@ namespace TowerDefence
 			get {return tower;}
 		}
 
+		public bool IsRoad
+		{
+			set {isRoad = value;}
+		}
+
+		public Tile NextTile
+		{
+			get {return nextTile;}
+			set {nextTile = value;}
+		}
+
 		void Start()
 		{
 			spriteRenderer = GetComponent<SpriteRenderer>();
+
+			RefreshStatus();
 		}
 
 		public void RefreshStatus()
 		{
-			var color = GameManager.IsAddingTower && TileManager.SelectedTile == this ? selectedColor : unselectedColor;
+			var defaultColor = isRoad ? roadColor : unselectedColor;
+			var color = GameManager.IsAddingTower && TileManager.SelectedTile == this ? selectedColor : defaultColor;
 
 			if(spriteRenderer != null)
 			{

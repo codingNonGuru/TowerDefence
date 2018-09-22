@@ -5,6 +5,22 @@ using UnityEngine;
 
 namespace TowerDefence
 {
+	[Serializable]
+	public class RoadTile
+	{
+		public int X;
+
+		public int Y;
+
+		Tile tile;
+
+		public Tile Tile
+		{
+			get {return tile;}
+			set {tile = value;}
+		}
+	}
+
 	public class TileManager : MonoBehaviour 
 	{
 		static TileManager instance = null;
@@ -19,13 +35,23 @@ namespace TowerDefence
 		[SerializeField]
 		int mapSize;
 
+		[SerializeField]
+		List <RoadTile> roadTiles = null;
+
 		List <Tile> tiles = null;
 
 		Tile selectedTile = null;
 
+		Tile firstRoadTile = null;
+
 		public static Tile SelectedTile
 		{
 			get {return instance.selectedTile;}
+		}
+
+		public static Tile FirstRoadTile
+		{
+			get {return instance.firstRoadTile;}
 		}
 
 		void Awake()
@@ -101,8 +127,33 @@ namespace TowerDefence
 
 					tiles.Add(tile);
 					tileObject.transform.SetParent(gameObject.transform);
+
+					foreach(var roadTile in roadTiles)
+					{
+						if(roadTile.X == i && roadTile.Y == j)
+						{
+							roadTile.Tile = tile;
+							tile.IsRoad = true;
+							break;
+						}
+					}
 				}	
 			}
+
+			for(int i = 0; i < roadTiles.Count; ++i)
+			{
+				if(i == roadTiles.Count - 1)
+					break;
+
+				var tile = roadTiles[i].Tile;
+				var nextTile = roadTiles[i + 1].Tile;
+				if(tile == null || nextTile == null)
+					continue;
+
+				tile.NextTile = nextTile;
+			}
+
+			firstRoadTile = roadTiles[0].Tile;
 		}
 	}
 }
