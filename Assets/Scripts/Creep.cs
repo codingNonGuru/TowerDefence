@@ -10,6 +10,10 @@ namespace TowerDefence
 
 		int currentHitpoints = 0;
 
+		float timer = 0.0f;
+
+		Tile currentTile = null;
+
 		public CreepData Data
 		{
 			set {data = value;}
@@ -17,20 +21,42 @@ namespace TowerDefence
 		
 		void Update () 
 		{
+			if(timer > 1.0f)
+			{
+				timer -= 1.0f;
+				currentTile = currentTile.NextTile;
+			}
 
+			if(currentTile.NextTile == null)
+			{
+				gameObject.SetActive(false);
+
+				CreepManager.DespawnCreep();
+
+				return;	
+			}
+
+			transform.position = currentTile.transform.position * (1.0f - timer) + currentTile.NextTile.transform.position * timer;
+
+			timer += Time.deltaTime * data.MoveSpeed;
 		}
 
-		public void Spawn()
+		public void Spawn(CreepData data)
 		{
 			gameObject.SetActive(true);
 
-			var spawnPlace = TileManager.FirstRoadTile;
-			if(spawnPlace != null)
+			currentTile = TileManager.FirstRoadTile;
+			if(currentTile != null)
 			{
-				transform.position = spawnPlace.transform.position;
+				transform.position = currentTile.transform.position;
 			}
 
-			//currentHitpoints = data.MaximumHitpoints;
+			this.data = data;
+
+			currentHitpoints = data.MaximumHitpoints;
+			transform.localScale = Vector3.one * data.Size;
+
+			timer = 0.0f;
 		}
 	}
 }

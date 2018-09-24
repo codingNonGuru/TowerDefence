@@ -31,6 +31,8 @@ namespace TowerDefence
 
 		int currentCreepIndex = 0;
 
+		int livingCreepCount = 0;
+
 		public static CreepWave CurrentWave
 		{
 			get {return instance.currentWave;}
@@ -52,15 +54,32 @@ namespace TowerDefence
 			if(GameManager.IsAddingTower)
 				return;
 
+			instance.currentCreepIndex = 0;
+
 			instance.currentWave = instance.creepWaves[instance.currentWaveIndex];
 
 			instance.currentWaveIndex++;
 
-			instance.SpawnCreep();
+			instance.livingCreepCount = instance.currentWave.CreepTypes.Count;
+		
+			instance.StartCoroutine(instance.LaunchWaveCoroutine());
 
 			if(OnWaveLaunched != null)
 			{
 				OnWaveLaunched.Invoke();
+			}
+		}
+
+		public static void DespawnCreep()
+		{
+			instance.livingCreepCount--;
+
+			if(instance.livingCreepCount > 0)
+				return;
+
+			if(OnWaveEnded != null)
+			{
+				OnWaveEnded.Invoke();
 			}
 		}
 
@@ -89,6 +108,16 @@ namespace TowerDefence
 			}
 		}
 
+		IEnumerator LaunchWaveCoroutine()
+		{
+			for(int i = 0; i < currentWave.CreepTypes.Count; ++i)
+			{
+				SpawnCreep();
+
+				yield return new WaitForSeconds(1.0f);
+			}
+		}
+
 		void SpawnCreep()
 		{
 			if(creeps == null)
@@ -98,7 +127,26 @@ namespace TowerDefence
 			if(creep == null)
 				return;
 
-			creep.Spawn();
+			var currentType = currentWave.CreepTypes[currentCreepIndex];
+			var currentData = GetCreepData(currentType);
+
+			creep.Spawn(currentData);
+
+			currentCreepIndex++;
+		}
+
+		CreepData GetCreepData(CreepType creepType)
+		{
+			if(creepDatas == null)
+				return null;
+
+			foreach(var data in creepDatas)
+			{
+				if(data.Type == creepType)
+					return data;
+			}
+
+			return null;
 		}
 	}
 }

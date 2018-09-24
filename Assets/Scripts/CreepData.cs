@@ -19,5 +19,7 @@ namespace TowerDefence
         public int MaximumHitpoints;
 
         public float MoveSpeed;
+
+        public float Size;
     }
 }

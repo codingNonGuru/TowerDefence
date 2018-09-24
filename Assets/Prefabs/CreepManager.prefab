@@ -57,9 +57,11 @@ MonoBehaviour:
   - Type: 0
     MaximumHitpoints: 5
     MoveSpeed: 2
+    Size: 1
   - Type: 1
     MaximumHitpoints: 20
     MoveSpeed: 1
+    Size: 2
   creepWaves:
   - CreepTypes: 0000000000000000000000000000000000000000
     GoldBonus: 0
