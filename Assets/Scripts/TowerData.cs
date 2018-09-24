@@ -18,6 +18,10 @@ namespace TowerDefence
 
 		public int Damage;
 
+		public int AttackRate;
+
+		public float AttackRange;
+
 		public bool HasSlow;
 
 		public int Cost;

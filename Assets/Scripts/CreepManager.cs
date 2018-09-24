@@ -43,6 +43,11 @@ namespace TowerDefence
 			get {return instance.currentWaveIndex == instance.creepWaves.Count;}
 		}
 
+		public static List <Creep> Creeps
+		{
+			get {return instance.creeps;}
+		}
+
 		void Awake()
 		{
 			if(instance == null)
