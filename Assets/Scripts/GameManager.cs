@@ -12,6 +12,7 @@ namespace TowerDefence
 		public static event Action OnTowerBuildModeEntered;
 		public static event Action OnTowerBuildModeExited;
 		public static event Action OnTowerAdded;
+		public static event Action OnGameRestarted;
 
 		[SerializeField]
 		List <TowerClass> towerClasses = null;
@@ -75,6 +76,16 @@ namespace TowerDefence
 			if(Input.GetMouseButtonDown(0) && TileManager.SelectedTile != null)
 			{
 				AddTower();
+			}
+		}
+
+		public static void Restart()
+		{
+			instance.goldCount = instance.initialGoldCount;
+
+			if(OnGameRestarted != null)
+			{
+				OnGameRestarted.Invoke();
 			}
 		}
 

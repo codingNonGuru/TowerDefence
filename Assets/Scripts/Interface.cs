@@ -17,6 +17,9 @@ namespace TowerDefence
 
 		[SerializeField]
 		ReturnButton returnButton = null;
+
+		[SerializeField]
+		GameOverPanel gameOverPanel = null;
 	
 		void Start()
 		{
@@ -38,6 +41,11 @@ namespace TowerDefence
 			if(returnButton != null)
 			{
 				returnButton.Setup();
+			}
+
+			if(gameOverPanel != null)
+			{
+				gameOverPanel.Setup();
 			}
 		}
 	}

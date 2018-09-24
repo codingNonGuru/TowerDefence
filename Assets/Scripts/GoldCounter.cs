@@ -14,6 +14,8 @@ namespace TowerDefence
 		{
 			GameManager.OnTowerAdded += HandleGoldAmountChanged;
 
+			GameManager.OnGameRestarted += HandleGoldAmountChanged;
+
 			HandleGoldAmountChanged();
 		}
 

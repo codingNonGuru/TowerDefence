@@ -70,6 +70,15 @@ namespace TowerDefence
 			tower.transform.localPosition = Vector3.zero;
 		}
 
+		public void Clear()
+		{
+			if(tower != null)
+			{
+				Destroy(tower.gameObject);
+				tower = null;
+			}
+		}
+
 		void OnMouseEnter()
 		{
 			isMouseOver = true;

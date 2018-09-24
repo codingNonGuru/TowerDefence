@@ -38,6 +38,11 @@ namespace TowerDefence
 			get {return instance.currentWave;}
 		}
 
+		public static bool HasLastWavePassed
+		{
+			get {return instance.currentWaveIndex == instance.creepWaves.Count;}
+		}
+
 		void Awake()
 		{
 			if(instance == null)
@@ -47,6 +52,8 @@ namespace TowerDefence
 		void Start()
 		{
 			CreateCreeps();
+
+			GameManager.OnGameRestarted += HandleGameRestart;
 		}
 
 		public static void LaunchWave()
@@ -147,6 +154,16 @@ namespace TowerDefence
 			}
 
 			return null;
+		}
+
+		void HandleGameRestart()
+		{
+			currentWaveIndex = 0;
+
+			foreach(var creep in creeps)
+			{
+				creep.gameObject.SetActive(false);
+			}
 		}
 	}
 }

@@ -17,6 +17,8 @@ namespace TowerDefence
 
 			GameManager.OnTowerBuildModeExited += HandleBuildModeExited;
 
+			GameManager.OnGameRestarted += HandleGameRestarted;
+
 			CreepManager.OnWaveLaunched += HandleWaveStarted;
 
 			CreepManager.OnWaveEnded += HandleWaveEnded;
@@ -32,6 +34,11 @@ namespace TowerDefence
 			gameObject.SetActive(true);
 		}
 
+		void HandleGameRestarted()
+		{
+			gameObject.SetActive(true);
+		}
+
 		void HandleWaveStarted()
 		{
 			gameObject.SetActive(false);
@@ -39,6 +46,9 @@ namespace TowerDefence
 
 		void HandleWaveEnded()
 		{
+			if(CreepManager.HasLastWavePassed)
+				return;
+				
 			gameObject.SetActive(true);
 		}
 	}

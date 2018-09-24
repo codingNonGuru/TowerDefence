@@ -63,6 +63,8 @@ namespace TowerDefence
 		void Start () 
 		{
 			GenerateTiles();
+
+			GameManager.OnGameRestarted += HandleGameRestart;
 		}
 
 		void Update()
@@ -154,6 +156,14 @@ namespace TowerDefence
 			}
 
 			firstRoadTile = roadTiles[0].Tile;
+		}
+
+		void HandleGameRestart()
+		{
+			foreach(var tile in tiles)
+			{
+				tile.Clear();
+			}
 		}
 	}
 }
