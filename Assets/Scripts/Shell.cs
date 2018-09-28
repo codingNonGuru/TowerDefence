@@ -8,15 +8,19 @@ namespace TowerDefence
 	{
 		const float lifeSpan = 5.0f;
 
-		const float speedModifier = 5.0f;
+		const float speedModifier = 10.0f;
 
 		float lifeTime = 0.0f;
+
+		int damagePotential = 1;
 
 		public void Fire()
 		{
 			lifeTime = 0.0f;
 
 			gameObject.SetActive(true);
+
+			damagePotential = 1;
 		}
 
 		void Update()
@@ -26,10 +30,28 @@ namespace TowerDefence
 			if(lifeTime > lifeSpan)
 			{
 				TowerManager.DestroyShell(this);
-				gameObject.SetActive(false);
 			}
 
 			lifeTime += Time.deltaTime;
+		}
+
+		void OnTriggerEnter2D(Collider2D collider)
+		{
+			if(damagePotential <= 0)
+				return;
+
+			var creep = collider.gameObject.GetComponent<Creep>();
+			if(creep == null)
+				return;
+
+			damagePotential--;
+
+			if(damagePotential <= 0)
+			{
+				TowerManager.DestroyShell(this);
+			}
+
+			Debug.Log("------------------------------------------------> COLLISION!!!");
 		}
 	}
 }

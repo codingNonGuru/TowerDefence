@@ -55,14 +55,14 @@ MonoBehaviour:
   - Type: 0
     Damage: 10
     AttackRate: 3
-    AttackRange: 3
+    AttackRange: 2
     HasSlow: 0
     Cost: 5
     IconColor: {r: 1, g: 0, b: 0, a: 1}
   - Type: 1
     Damage: 3
     AttackRate: 1
-    AttackRange: 2
+    AttackRange: 1
     HasSlow: 1
     Cost: 8
     IconColor: {r: 0, g: 0.34647155, b: 1, a: 1}

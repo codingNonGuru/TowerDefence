@@ -48,6 +48,8 @@ namespace TowerDefence
 			if(instance.shells == null)
 				return;
 
+			shell.gameObject.SetActive(false);
+
 			var index = instance.shells.IndexOf(shell);
 
 			instance.lastFreeShellIndex++;		
