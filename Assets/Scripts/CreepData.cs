@@ -8,7 +8,8 @@ namespace TowerDefence
     public enum CreepType
     {
         GOBLIN,
-        ORC
+        ORC,
+        TROLL
     }
 
     [Serializable]
