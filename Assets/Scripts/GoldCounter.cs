@@ -18,6 +18,8 @@ namespace TowerDefence
 
 			GameManager.OnCreepKilled += HandleGoldAmountChanged;
 
+			GameManager.OnWaveEnded += HandleGoldAmountChanged;
+
 			HandleGoldAmountChanged();
 		}
 

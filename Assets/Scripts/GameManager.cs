@@ -14,6 +14,7 @@ namespace TowerDefence
 		public static event Action OnTowerAdded;
 		public static event Action OnGameRestarted;
 		public static event Action OnCreepKilled;
+		public static event Action OnWaveEnded;
 
 		[SerializeField]
 		List <TowerClass> towerClasses = null;
@@ -75,6 +76,8 @@ namespace TowerDefence
 		void Start()
 		{
 			CreepManager.OnCreepKilled += HandleCreepKilled;
+
+			CreepManager.OnWaveEnded += HandleWaveEnded;
 		}
 
 		void Update()
@@ -171,6 +174,16 @@ namespace TowerDefence
 			if(OnCreepKilled != null)
 			{
 				OnCreepKilled.Invoke();
+			}
+		}
+
+		void HandleWaveEnded()
+		{
+			goldCount += CreepManager.CurrentWave.GoldBonus;
+
+			if(OnWaveEnded != null)
+			{
+				OnWaveEnded.Invoke();
 			}
 		}
 	}
