@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\TowerData.cs" />
      <Compile Include="Assets\Scripts\TowerItem.cs" />
      <Compile Include="Assets\Scripts\TowerManager.cs" />
+     <Compile Include="Assets\Scripts\TowerRangeDisplay.cs" />
      <Compile Include="Assets\Scripts\TowerSelectionPanel.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>/home/andrei/Documents/Programming/Projects/TowerDefence/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

@@ -38,7 +38,12 @@ namespace TowerDefence
 		[SerializeField]
 		List <RoadTile> roadTiles = null;
 
+		[SerializeField]
+		TowerRangeDisplay towerRangeDisplay = null;
+
 		List <Tile> tiles = null;
+
+		Tile previousTile = null;
 
 		Tile selectedTile = null;
 
@@ -65,22 +70,24 @@ namespace TowerDefence
 			GenerateTiles();
 
 			GameManager.OnGameRestarted += HandleGameRestart;
+
+			if(towerRangeDisplay != null)
+			{
+				towerRangeDisplay.Setup();
+			}
 		}
 
 		void Update()
 		{
 			if(!GameManager.IsAddingTower)
 			{
-				if(selectedTile != null)
-				{
-					selectedTile.RefreshStatus();
-				}
+				RefreshStatus();
 
 				selectedTile = null;
 				return;
 			}
 
-			Tile previousTile = selectedTile;
+			previousTile = selectedTile;
 
 			selectedTile = null;
 			foreach(var tile in tiles)
@@ -92,14 +99,11 @@ namespace TowerDefence
 				}
 			}
 
-			if(previousTile != null)
-			{
-				previousTile.RefreshStatus();
-			}
+			RefreshStatus();
 
-			if(selectedTile != null)
+			if(OnTileSelected != null)
 			{
-				selectedTile.RefreshStatus();
+				OnTileSelected.Invoke();
 			}
 		}
 
@@ -156,6 +160,19 @@ namespace TowerDefence
 			}
 
 			firstRoadTile = roadTiles[0].Tile;
+		}
+
+		void RefreshStatus()
+		{
+			if(previousTile != null)
+			{
+				previousTile.RefreshStatus();
+			}
+
+			if(selectedTile != null)
+			{
+				selectedTile.RefreshStatus();
+			}
 		}
 
 		void HandleGameRestart()
