@@ -44,6 +44,11 @@ namespace TowerDefence
 			if(creep == null)
 				return;
 
+			if(!creep.IsAlive())
+				return;
+
+			creep.Damage();
+
 			damagePotential--;
 
 			if(damagePotential <= 0)

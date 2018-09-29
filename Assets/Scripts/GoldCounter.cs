@@ -16,6 +16,8 @@ namespace TowerDefence
 
 			GameManager.OnGameRestarted += HandleGoldAmountChanged;
 
+			GameManager.OnCreepKilled += HandleGoldAmountChanged;
+
 			HandleGoldAmountChanged();
 		}
 

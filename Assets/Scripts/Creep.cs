@@ -17,6 +17,12 @@ namespace TowerDefence
 		public CreepData Data
 		{
 			set {data = value;}
+			get {return data;}
+		}
+
+		public bool IsDead
+		{
+			get {return currentHitpoints == 0;}
 		}
 		
 		void Update () 
@@ -29,9 +35,7 @@ namespace TowerDefence
 
 			if(currentTile.NextTile == null)
 			{
-				gameObject.SetActive(false);
-
-				CreepManager.DespawnCreep();
+				CreepManager.DespawnCreep(this);
 
 				return;	
 			}
@@ -57,6 +61,21 @@ namespace TowerDefence
 			transform.localScale = Vector3.one * data.Size;
 
 			timer = 0.0f;
+		}
+
+		public bool IsAlive()
+		{
+			return currentHitpoints > 0;
+		}
+
+		public void Damage()
+		{
+			currentHitpoints--;
+
+			if(!IsAlive())
+			{
+				CreepManager.DespawnCreep(this);
+			}
 		}
 	}
 }

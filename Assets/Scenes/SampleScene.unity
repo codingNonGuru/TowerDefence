@@ -877,11 +877,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114218928712820656, guid: b6e4c4a39309d494d91c95be53a44e15,
-        type: 2}
-      propertyPath: creepWaves.Array.data[0].CreepTypes.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4725688534929938, guid: b6e4c4a39309d494d91c95be53a44e15, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0

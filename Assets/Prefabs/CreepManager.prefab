@@ -55,15 +55,19 @@ MonoBehaviour:
     type: 2}
   creepDatas:
   - Type: 0
-    MaximumHitpoints: 5
+    MaximumHitpoints: 3
     MoveSpeed: 2
     Size: 1
+    GoldBounty: 2
   - Type: 1
-    MaximumHitpoints: 20
+    MaximumHitpoints: 10
     MoveSpeed: 1
     Size: 2
+    GoldBounty: 5
   creepWaves:
-  - CreepTypes: 0000000000000000000000000000000000000000
-    GoldBonus: 0
-  - CreepTypes: 0000000000000000010000000000000000000000010000000000000000000000
-    GoldBonus: 0
+  - CreepTypes: 000000000000000000000000
+    GoldBonus: 1
+  - CreepTypes: 0000000000000000010000000000000000000000
+    GoldBonus: 2
+  - CreepTypes: 000000000100000000000000000000000100000000000000
+    GoldBonus: 3

@@ -21,5 +21,7 @@ namespace TowerDefence
         public float MoveSpeed;
 
         public float Size;
+
+        public int GoldBounty;
     }
 }

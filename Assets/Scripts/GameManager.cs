@@ -13,6 +13,7 @@ namespace TowerDefence
 		public static event Action OnTowerBuildModeExited;
 		public static event Action OnTowerAdded;
 		public static event Action OnGameRestarted;
+		public static event Action OnCreepKilled;
 
 		[SerializeField]
 		List <TowerClass> towerClasses = null;
@@ -69,6 +70,11 @@ namespace TowerDefence
 				instance = this;
 
 			goldCount = initialGoldCount;
+		}
+
+		void Start()
+		{
+			CreepManager.OnCreepKilled += HandleCreepKilled;
 		}
 
 		void Update()
@@ -152,6 +158,19 @@ namespace TowerDefence
 			if(OnTowerAdded != null)
 			{
 				OnTowerAdded.Invoke();
+			}
+		}
+
+		void HandleCreepKilled(Creep creep)
+		{
+			if(creep == null || creep.Data == null)
+				return;
+
+			goldCount += creep.Data.GoldBounty;
+
+			if(OnCreepKilled != null)
+			{
+				OnCreepKilled.Invoke();
 			}
 		}
 	}
