@@ -11,7 +11,7 @@ namespace TowerDefence
 
 		public static event Action OnWaveLaunched;
 		public static event Action OnWaveEnded;
-		public static event Action<Creep> OnCreepKilled;
+		public static event Action<Creep> OnCreepDespawned;
 
 		[SerializeField]
 		GameObject creepPrefab = null;
@@ -89,9 +89,9 @@ namespace TowerDefence
 
 			instance.livingCreepCount--;
 
-			if(OnCreepKilled != null)
+			if(OnCreepDespawned != null)
 			{
-				OnCreepKilled.Invoke(creep);
+				OnCreepDespawned.Invoke(creep);
 			}
 
 			if(instance.livingCreepCount > 0)

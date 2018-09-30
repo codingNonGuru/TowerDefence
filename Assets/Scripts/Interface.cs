@@ -20,6 +20,9 @@ namespace TowerDefence
 
 		[SerializeField]
 		GameOverPanel gameOverPanel = null;
+
+		[SerializeField]
+		HealthCounter healthCounter = null;
 	
 		void Start()
 		{
@@ -46,6 +49,11 @@ namespace TowerDefence
 			if(gameOverPanel != null)
 			{
 				gameOverPanel.Setup();
+			}
+
+			if(healthCounter != null)
+			{
+				healthCounter.Setup();
 			}
 		}
 	}

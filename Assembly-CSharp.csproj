@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GameOverPanel.cs" />
      <Compile Include="Assets\Scripts\GoldCounter.cs" />
+     <Compile Include="Assets\Scripts\HealthCounter.cs" />
      <Compile Include="Assets\Scripts\Interface.cs" />
      <Compile Include="Assets\Scripts\ReturnButton.cs" />
      <Compile Include="Assets\Scripts\Shell.cs" />

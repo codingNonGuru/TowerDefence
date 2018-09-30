@@ -55,8 +55,6 @@ namespace TowerDefence
 			{
 				TowerManager.DestroyShell(this);
 			}
-
-			Debug.Log("------------------------------------------------> COLLISION!!!");
 		}
 	}
 }

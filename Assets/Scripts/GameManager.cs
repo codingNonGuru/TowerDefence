@@ -14,6 +14,7 @@ namespace TowerDefence
 		public static event Action OnTowerAdded;
 		public static event Action OnGameRestarted;
 		public static event Action OnCreepKilled;
+		public static event Action OnCreepEscaped;
 		public static event Action OnWaveEnded;
 
 		[SerializeField]
@@ -25,9 +26,14 @@ namespace TowerDefence
 		[SerializeField]
 		int initialGoldCount = 0;
 
+		[SerializeField]
+		int initialHitpointCount = 0;
+
 		bool isAddingTower = false;
 
 		int goldCount = 0;
+
+		int hitpointCount = 0;
 
 		TowerClass selectedTowerClass = null;
 
@@ -39,6 +45,11 @@ namespace TowerDefence
 		public static int GoldCount
 		{
 			get {return instance.goldCount;}
+		}
+
+		public static int HitpointCount
+		{
+			get {return instance.hitpointCount;}
 		}
 
 		public static List <TowerClass> TowerClasses
@@ -71,11 +82,13 @@ namespace TowerDefence
 				instance = this;
 
 			goldCount = initialGoldCount;
+
+			hitpointCount = initialHitpointCount;
 		}
 
 		void Start()
 		{
-			CreepManager.OnCreepKilled += HandleCreepKilled;
+			CreepManager.OnCreepDespawned += HandleCreepDespawned;
 
 			CreepManager.OnWaveEnded += HandleWaveEnded;
 		}
@@ -91,6 +104,8 @@ namespace TowerDefence
 		public static void Restart()
 		{
 			instance.goldCount = instance.initialGoldCount;
+
+			instance.hitpointCount = instance.initialHitpointCount;
 
 			if(OnGameRestarted != null)
 			{
@@ -164,16 +179,28 @@ namespace TowerDefence
 			}
 		}
 
-		void HandleCreepKilled(Creep creep)
+		void HandleCreepDespawned(Creep creep)
 		{
 			if(creep == null || creep.Data == null)
 				return;
 
-			goldCount += creep.Data.GoldBounty;
-
-			if(OnCreepKilled != null)
+			if(creep.IsDead)
 			{
-				OnCreepKilled.Invoke();
+				goldCount += creep.Data.GoldBounty;
+
+				if(OnCreepKilled != null)
+				{
+					OnCreepKilled.Invoke();
+				}
+			}
+			else
+			{
+				hitpointCount--;
+
+				if(OnCreepEscaped != null)
+				{
+					OnCreepEscaped.Invoke();
+				}
 			}
 		}
 
