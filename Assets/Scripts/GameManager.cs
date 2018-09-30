@@ -52,6 +52,11 @@ namespace TowerDefence
 			get {return instance.hitpointCount;}
 		}
 
+		public static bool IsAlive
+		{
+			get {return instance.hitpointCount > 0;}
+		}
+
 		public static List <TowerClass> TowerClasses
 		{
 			get {return instance.towerClasses;}

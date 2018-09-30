@@ -48,6 +48,9 @@ namespace TowerDefence
 		{
 			if(CreepManager.HasLastWavePassed)
 				return;
+
+			if(!GameManager.IsAlive)
+				return;
 				
 			gameObject.SetActive(true);
 		}

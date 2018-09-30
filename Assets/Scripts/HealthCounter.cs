@@ -14,6 +14,8 @@ namespace TowerDefence
 		{
 			GameManager.OnCreepEscaped += HandleHealthChanged;
 
+			GameManager.OnGameRestarted += HandleHealthChanged;
+
 			HandleHealthChanged();
 		}
 
