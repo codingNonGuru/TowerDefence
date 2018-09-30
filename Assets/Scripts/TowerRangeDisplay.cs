@@ -6,6 +6,14 @@ namespace TowerDefence
 {
 	public class TowerRangeDisplay : MonoBehaviour 
 	{
+		void Update()
+		{
+			if(GameManager.SelectedTowerClass != null)
+			{
+				transform.localScale = Vector3.one * GameManager.SelectedTowerClass.AttackRange * 2.0f;
+			}
+		}
+
 		public void Setup()
 		{
 			TileManager.OnTileSelected += HandleTileSelected;

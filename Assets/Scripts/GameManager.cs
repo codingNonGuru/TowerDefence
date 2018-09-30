@@ -64,6 +64,7 @@ namespace TowerDefence
 
 		public static TowerClass SelectedTowerClass
 		{
+			get {return instance.selectedTowerClass;}
 			set {instance.selectedTowerClass = value;}
 		}
 
