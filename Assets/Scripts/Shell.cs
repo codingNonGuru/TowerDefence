@@ -12,15 +12,13 @@ namespace TowerDefence
 
 		float lifeTime = 0.0f;
 
-		int damagePotential = 1;
+		int damagePotential = 0;
 
-		public void Fire()
+		bool hasChillEffect = false;
+
+		public bool HasChillEffect
 		{
-			lifeTime = 0.0f;
-
-			gameObject.SetActive(true);
-
-			damagePotential = 1;
+			get {return hasChillEffect;}
 		}
 
 		void Update()
@@ -47,7 +45,7 @@ namespace TowerDefence
 			if(!creep.IsAlive())
 				return;
 
-			creep.Damage();
+			creep.Damage(this);
 
 			damagePotential--;
 
@@ -55,6 +53,23 @@ namespace TowerDefence
 			{
 				TowerManager.DestroyShell(this);
 			}
+		}
+
+		public void Fire(Tower parentTower, Creep targetCreep)
+		{
+			transform.position = parentTower.transform.position;
+
+			var fireDirection = targetCreep.transform.position - transform.position;
+			fireDirection.z = 0.0f;
+			transform.up = fireDirection.normalized;
+
+			lifeTime = 0.0f;
+
+			gameObject.SetActive(true);
+
+			damagePotential = parentTower.TowerClass.Damage;
+
+			hasChillEffect = parentTower.TowerClass.HasSlow;
 		}
 	}
 }

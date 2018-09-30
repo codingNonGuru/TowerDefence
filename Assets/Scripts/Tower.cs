@@ -16,6 +16,7 @@ namespace TowerDefence
 
 		public TowerClass TowerClass
 		{
+			get {return towerClass;}
 			set {towerClass = value;}
 		}
 
@@ -73,13 +74,7 @@ namespace TowerDefence
 			if(shell == null)
 				return;
 
-			shell.transform.position = transform.position;
-
-			var fireDirection = targetCreep.transform.position - shell.transform.position;
-			fireDirection.z = 0.0f;
-			shell.transform.up = fireDirection.normalized;
-
-			shell.Fire();
+			shell.Fire(this, targetCreep);
 
 			shootTimer = 0.0f;
 		}
