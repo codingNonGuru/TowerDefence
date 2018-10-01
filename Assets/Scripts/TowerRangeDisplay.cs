@@ -8,9 +8,9 @@ namespace TowerDefence
 	{
 		void Update()
 		{
-			if(GameManager.SelectedTowerClass != null)
+			if(TowerManager.SelectedTowerClass != null)
 			{
-				transform.localScale = Vector3.one * GameManager.SelectedTowerClass.AttackRange * 2.0f;
+				transform.localScale = Vector3.one * TowerManager.SelectedTowerClass.AttackRange * 2.0f;
 			}
 		}
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,14 @@ namespace TowerDefence
 	public class TowerManager : MonoBehaviour 
 	{
 		static TowerManager instance = null;
+
+		public static event Action OnTowerAdded;
+
+		[SerializeField]
+		List <TowerClass> towerClasses = null;
+
+		[SerializeField]
+		GameObject towerPrefab = null;
 
 		[SerializeField]
 		GameObject shellPrefab = null;
@@ -19,6 +28,33 @@ namespace TowerDefence
 
 		int lastFreeShellIndex = 0;
 
+		TowerClass selectedTowerClass = null;
+
+		public static List <TowerClass> TowerClasses
+		{
+			get {return instance.towerClasses;}
+		}
+
+		public static TowerClass SelectedTowerClass
+		{
+			get {return instance.selectedTowerClass;}
+			set {instance.selectedTowerClass = value;}
+		}
+
+		public static bool CanBuildTower
+		{
+			get 
+			{
+				foreach(var towerClass in instance.towerClasses)
+				{
+					if(GameManager.GoldCount >= towerClass.Cost)
+						return true;
+				}
+
+				return false;
+			}
+		}
+
 		void Awake()
 		{
 			if(instance == null)
@@ -28,6 +64,14 @@ namespace TowerDefence
 		void Start()
 		{
 			InstantiateShells();
+		}
+
+		void Update()
+		{
+			if(Input.GetMouseButtonDown(0) && TileManager.SelectedTile != null)
+			{
+				AddTower();
+			}
 		}
 
 		public static Shell CreateShell()
@@ -82,6 +126,46 @@ namespace TowerDefence
 				shells.Add(shell);
 
 				freeShellIndices.Add(i);
+			}
+		}
+
+		void AddTower()
+		{
+			if(!GameManager.IsAddingTower)
+				return;
+
+			if(TileManager.SelectedTile.Tower != null)
+				return;
+
+			if(towerPrefab == null)
+				return;
+
+			if(selectedTowerClass == null)
+				return;
+
+			if(selectedTowerClass.Cost > GameManager.GoldCount)
+				return;
+
+			var towerObject = Instantiate(towerPrefab);
+			if(towerObject == null)
+				return;
+
+			var tower = towerObject.GetComponent<Tower>();
+			if(tower == null)
+			{
+				Destroy(towerObject);
+				return;
+			}
+
+			tower.TowerClass = selectedTowerClass;
+
+			TileManager.SelectedTile.AddTower(tower);
+
+			GameManager.AddTower(selectedTowerClass);
+
+			if(OnTowerAdded != null)
+			{
+				OnTowerAdded.Invoke();
 			}
 		}
 	}

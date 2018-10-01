@@ -11,17 +11,10 @@ namespace TowerDefence
 
 		public static event Action OnTowerBuildModeEntered;
 		public static event Action OnTowerBuildModeExited;
-		public static event Action OnTowerAdded;
 		public static event Action OnGameRestarted;
 		public static event Action OnCreepKilled;
 		public static event Action OnCreepEscaped;
 		public static event Action OnWaveEnded;
-
-		[SerializeField]
-		List <TowerClass> towerClasses = null;
-
-		[SerializeField]
-		GameObject towerPrefab = null;
 
 		[SerializeField]
 		int initialGoldCount = 0;
@@ -34,8 +27,6 @@ namespace TowerDefence
 		int goldCount = 0;
 
 		int hitpointCount = 0;
-
-		TowerClass selectedTowerClass = null;
 
 		public static bool IsAddingTower
 		{
@@ -57,31 +48,6 @@ namespace TowerDefence
 			get {return instance.hitpointCount > 0;}
 		}
 
-		public static List <TowerClass> TowerClasses
-		{
-			get {return instance.towerClasses;}
-		}
-
-		public static TowerClass SelectedTowerClass
-		{
-			get {return instance.selectedTowerClass;}
-			set {instance.selectedTowerClass = value;}
-		}
-
-		public static bool CanBuildTower
-		{
-			get 
-			{
-				foreach(var towerClass in instance.towerClasses)
-				{
-					if(instance.goldCount >= towerClass.Cost)
-						return true;
-				}
-
-				return false;
-			}
-		}
-
 		void Awake()
 		{
 			if(instance == null)
@@ -97,14 +63,6 @@ namespace TowerDefence
 			CreepManager.OnCreepDespawned += HandleCreepDespawned;
 
 			CreepManager.OnWaveEnded += HandleWaveEnded;
-		}
-
-		void Update()
-		{
-			if(Input.GetMouseButtonDown(0) && TileManager.SelectedTile != null)
-			{
-				AddTower();
-			}
 		}
 
 		public static void Restart()
@@ -145,44 +103,9 @@ namespace TowerDefence
 			}
 		}
 
-		void AddTower()
+		public static void AddTower(TowerClass towerClass)
 		{
-			if(!isAddingTower)
-				return;
-
-			if(TileManager.SelectedTile.Tower != null)
-				return;
-
-			if(towerPrefab == null)
-				return;
-
-			if(selectedTowerClass == null)
-				return;
-
-			if(selectedTowerClass.Cost > goldCount)
-				return;
-
-			var towerObject = Instantiate(towerPrefab);
-			if(towerObject == null)
-				return;
-
-			var tower = towerObject.GetComponent<Tower>();
-			if(tower == null)
-			{
-				Destroy(towerObject);
-				return;
-			}
-
-			tower.TowerClass = selectedTowerClass;
-
-			TileManager.SelectedTile.AddTower(tower);
-
-			goldCount -= selectedTowerClass.Cost;
-
-			if(OnTowerAdded != null)
-			{
-				OnTowerAdded.Invoke();
-			}
+			instance.goldCount -= towerClass.Cost;
 		}
 
 		void HandleCreepDespawned(Creep creep)

@@ -40,7 +40,7 @@ namespace TowerDefence
 			if(itemPrefab == null)
 				return;
 
-			var towerClasses = GameManager.TowerClasses;
+			var towerClasses = TowerManager.TowerClasses;
 			if(towerClasses == null)
 				return;
 
@@ -76,7 +76,7 @@ namespace TowerDefence
 
 		void UpdateSelection()
 		{
-			var towerClasses = GameManager.TowerClasses;
+			var towerClasses = TowerManager.TowerClasses;
 			if(towerClasses == null)
 				return;
 
@@ -97,7 +97,7 @@ namespace TowerDefence
 				}
 			}
 
-			GameManager.SelectedTowerClass = towerClasses[selectionIndex];
+			TowerManager.SelectedTowerClass = towerClasses[selectionIndex];
 
 			if(items == null)
 				return;
