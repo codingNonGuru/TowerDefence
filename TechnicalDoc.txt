@@ -1,0 +1,13 @@
+The games main action takes place on a 20 x 20 Tile grid. The grid size is variable. A Tile Manager class dynamically instantiates the grid. When in Tower Build mode, Tile Manager handles Tile selection. Each Tile can hold one Tower at most. Towers can only be placed while in Build mode. 
+
+Each Tile can be a path node. Path data is located in the Tile Manager prefab, but a system can be implemented so that it's fetched from a JSON (or some other external source). Path data consists in a list of Tiles (the path nodes - or Road Tiles as they are called in code). Each Road Tile is connected to the next one, based on their order in the list. 
+
+Creeps are spawned on the first Road Tile. They travel from one Road Tile to the next until they reach the last one, where they are despawned through the Creep Manager. They are also despawned when they reach zero hitpoint count. Creep Manager handles spawn & despawn. Creeps are never 'Destroy'-ed through the inbuilt Unity function. They are freed by the Manager. All the Creeps are preallocated at start, and destroyed concretely only on process termination. Creeps spawn in Waves. The Creep Wave data is defined in the Creep Manager prefab. When a Creep Wave is launched, a coroutine starts that lasts until all Creeps are spawned. 
+
+As stated above, each Tile can hold one Tower at most. The Towers are Instantiated and Destroyed dynamically, since it is much less costly to do so than for Creeps. There are two Tower Types. Again, the data for these is held in a Manager prefab, but it can be sourced externally if needed. When Creeps are in range, the Tower shoots a Shell targeting the closest Creep. Shells are allocated and deallocated through a dedicated Manager. The memory handling process is more complex than for the Creeps, since memory turnout is much higher (and so are the potential performance penalties). Shells fired by the Ice Blaster Tower Type slow Creep movement.
+
+When the last Creep Wave is done, the game is over, and a corresponding pop-up fades in. If player hitpoint count hits zero before that, the Game Over overlay pops up earlier. The player can then opt to restart the game and all data is reset and all memory deallocated.
+
+Since the game is rather simple, some obvious design patterns were omitted, most notably the State pattern. The game can be separated into a Preparation state, a Tower Build state and a Creep Battle state.
+
+No external dependencies were used.
